@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Menu, X, Shield } from 'lucide-react';
+import { Menu, X, Shield, ChevronDown } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -49,6 +55,36 @@ export default function Navbar() {
                 )}
               </Link>
             ))}
+            
+            {/* More Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors duration-200">
+                <span>More</span>
+                <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48 bg-background border border-border shadow-lg">
+                <DropdownMenuItem asChild>
+                  <Link to="/policies" className="w-full cursor-pointer">
+                    View Policies
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/my-policies" className="w-full cursor-pointer">
+                    My Policies
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/submit-claim" className="w-full cursor-pointer">
+                    Submit Claim
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/admin" className="w-full cursor-pointer">
+                    Admin Panel
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Desktop CTA */}
