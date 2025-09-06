@@ -13,6 +13,12 @@ import Blog from "./pages/Blog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import NotFound from "./pages/NotFound";
+import ViewPolicies from "./pages/ViewPolicies";
+import MyPolicies from "./pages/MyPolicies";
+import SubmitClaim from "./pages/SubmitClaim";
+import AdminPanel from "./pages/AdminPanel";
+
+import { Web3Provider } from './contexts/Web3Context';
 
 const queryClient = new QueryClient();
 
@@ -21,10 +27,11 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <Web3Provider>
+        <BrowserRouter>
         <div className="min-h-screen flex flex-col">
           <Navbar />
-          <main className="flex-1">
+          <main className="flex-1 pt-16 mt-1">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -33,6 +40,13 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-conditions" element={<TermsConditions />} />
+              
+              {/* Insurance Routes */}
+              <Route path="/policies" element={<ViewPolicies />} />
+              <Route path="/my-policies" element={<MyPolicies />} />
+              <Route path="/submit-claim" element={<SubmitClaim />} />
+              <Route path="/admin" element={<AdminPanel />} />
+              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -40,6 +54,7 @@ const App = () => (
           <Footer />
         </div>
       </BrowserRouter>
+      </Web3Provider>
     </TooltipProvider>
   </QueryClientProvider>
 );

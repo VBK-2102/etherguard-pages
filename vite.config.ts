@@ -19,4 +19,19 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: 'es2020',
+    rollupOptions: {
+      output: {
+        format: 'es',
+      },
+    },
+    minify: 'esbuild',
+    sourcemap: true,
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'es2020',
+    },
+  },
 }));

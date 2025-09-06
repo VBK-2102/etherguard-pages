@@ -1,7 +1,37 @@
 import { motion } from 'framer-motion';
 import { Shield, Zap, Users, ChevronRight, CheckCircle, ArrowRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
+import FOG from 'vanta/dist/vanta.fog.min';
 
 export default function Home() {
+  const [vantaEffect, setVantaEffect] = useState<any>(null);
+  const vantaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!vantaEffect && vantaRef.current) {
+      setVantaEffect(
+        FOG({
+          el: vantaRef.current,
+          THREE: THREE,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          highlightColor: 0x5a00ff,
+          midtoneColor: 0xf0ff,
+          baseColor: 0xffebeb,
+          blurFactor: 0.60,
+          speed: 1.50,
+          zoom: 1
+        })
+      );
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy();
+    };
+  }, [vantaEffect]);
   const features = [
     {
       icon: Shield,
@@ -31,9 +61,9 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-hero opacity-10" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <section ref={vantaRef} className="relative pt-20 pb-16 overflow-hidden min-h-[600px]">
+        <div className="absolute inset-0 z-0" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -42,7 +72,7 @@ export default function Home() {
               className="text-4xl md:text-6xl font-bold text-foreground mb-6"
             >
               The Future of{' '}
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
+              <span className="bg-gradient-primary text-white bg-clip-text text-transparent">
                 Decentralized Insurance
               </span>
             </motion.h1>
@@ -53,8 +83,8 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto"
             >
-              Experience transparent, efficient, and community-driven insurance powered by blockchain technology. 
-              No middlemen, no hidden fees, just fair coverage for everyone.
+              <span className="bg-gradient-primary text-white bg-clip-text text-transparent">Experience transparent, efficient, and community-driven insurance powered by blockchain technology. 
+              No middlemen, no hidden fees, just fair coverage for everyone.</span>
             </motion.p>
 
             <motion.div
@@ -129,8 +159,16 @@ export default function Home() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 relative">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+          src="/bg.mp4"
+        />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -170,20 +208,14 @@ export default function Home() {
               className="bg-gradient-secondary p-8 rounded-2xl shadow-large"
             >
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-foreground mb-4">
-                  Ready to Get Started?
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Join our community and experience the future of insurance today.
-                </p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold shadow-medium hover:shadow-large transition-all duration-300 w-full flex items-center justify-center"
-                >
-                  Start Your Journey
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </motion.button>
+                <div className="w-full h-100 mb-10">
+                  <img
+                    src="/na.webp"
+                    alt="Insurance Analysis Animation"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                
               </div>
             </motion.div>
           </div>
